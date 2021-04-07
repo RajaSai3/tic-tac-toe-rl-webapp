@@ -1,0 +1,149 @@
+*{
+    margin: 0;
+    padding: 0;
+    outline: none;
+}
+
+body{
+    background-color: #184d47;
+    color: #fffaf0;
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+}
+
+#main-page-heading{
+    margin: 5%;
+    font-size: 1.85rem;
+}
+
+/* Main div  */
+
+@media only screen and (min-width: 900px){
+    #main-div{
+    width:40%;
+    margin:auto;
+
+    }
+}
+
+@media only screen and (min-width: 601px)
+{
+    #main-div{
+        width:60%;
+    }
+}
+#main-div{
+    text-align: center;
+    /* width:40%; */
+    margin:auto;
+}
+
+
+/* Symbols div  */
+
+#symbols{
+    margin: 8rem auto 2.5rem;
+}
+
+.symbols-img{
+    margin:1rem;
+    height:5rem;
+    width:5rem;
+}
+
+#symbols p{
+    font-size:larger;
+    font-weight:500;
+    margin: auto 2.5rem;
+}
+
+/* Score board  */
+
+#score-board{
+    border: 1rem;
+    border-color: aliceblue;
+    border-style:double;
+    border-radius: 1.5rem;
+    margin: 3rem;
+
+}
+
+#score-board span{
+    font-size: 5rem;
+    margin: .5rem;
+}
+
+
+/* Button  */
+
+.button{
+    border-radius: 0.75rem;
+    border-color: #fff;
+    border-style:solid;
+    border-width: 0.2rem;
+    
+    background-color: transparent;
+    
+    margin:0.25rem;
+    padding: 1rem 2rem;
+    color: #fff;
+    cursor: pointer;
+}
+
+.button:hover{
+    /* border-color: red;
+    color:red; */
+    
+    color: #184d47;
+    background-color: #fff;
+}
+
+/* Game Board */
+
+#game-board{
+    margin:5rem auto; 
+}
+
+.main-table {
+  border-collapse: collapse;
+  border-style: hidden;
+  margin:auto;
+}
+.main-table .main-td {
+  border-style: solid;
+  border-width: thick;
+  border-color: white;
+}
+
+.cell{
+  height: 5rem;
+  width: 5rem;
+  margin: 5px;
+  border-radius: 15px;
+  display :inline-block;
+  text-align: center;
+}
+
+.cell:hover{
+  cursor: pointer;
+}
+
+
+.clicked-cell-img{
+    height:4.6rem;
+    width:4.6rem;
+    margin: auto;
+}
+/* Result  */
+
+#game-result{
+    margin:2.5rem;
+}
+
+#game-result p{
+    font-size:larger;
+}
+
+div.cell img{
+    cursor: not-allowed;
+}
