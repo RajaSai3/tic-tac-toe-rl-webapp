@@ -1,12 +1,12 @@
 
 export var circle_tag = "<img src='../../static/img/svg/006-circle-shape-outline.svg' alt='circle' class='clicked-cell-img'>";
 export var cross_tag = "<img src='../../static/img/svg/001-close.svg' alt='cross' class='clicked-cell-img'>";
-var result_string = "Click on the New Game Button to start a new game";
-// export let is_game_over = false;
 
-var state = "123456789";
+var result_string = "Click on the New Game Button to start a new game";
+
 var score_x = 0;
 var score_o = 0;
+var is_first_player_game = true;
 
 
 $("#game-result p").text(result_string);
@@ -90,7 +90,7 @@ function check_terminal_state(state, symbol){
             score_x++;
         }
 
-            console.log(result_string);
+            // console.log(result_string);
             $("#game-result p").text(result_string);            
             $("#score-x").text(score_x);
             $("#score-o").text(score_o);
@@ -100,7 +100,7 @@ function check_terminal_state(state, symbol){
     
     else if(numbers.length == 0){// Game draw
         result_string = "Game is a draw";
-        console.log(result_string);
+        // console.log(result_string);
         $("#game-result p").text(result_string);
         return true;
     }
@@ -157,7 +157,7 @@ function check_diagonal(indices){
 
 
 
-function new_game_mod(filedata){
+function play_game(filedata, is_first_player_game){
 
 
         
@@ -166,9 +166,11 @@ function new_game_mod(filedata){
         var symbol = "X";
         var index = -1;
         
-        index = filedata[new_state];
-        state = add_input_to_the_board(state, index, symbol);
-        display_board(state);
+        if(is_first_player_game){
+            index = filedata[new_state];
+            state = add_input_to_the_board(state, index, symbol);
+            display_board(state);
+        }
 
 
         $(".cell").click(function (){
@@ -180,16 +182,23 @@ function new_game_mod(filedata){
                 index = $(this).attr("value");
                 state = add_input_to_the_board(state, index, symbol);
                 display_board(state);
+                
 
             }
 
             if(!check_terminal_state(state, symbol)){
-
+                
                 symbol = (symbol == "X") ? "O":"X";
-                new_state = state.replaceAll("X", "f").replaceAll("O", "s");
+
+                if(is_first_player_game)
+                    new_state = state.replaceAll("X", "f").replaceAll("O", "s");
+                else
+                    new_state = state.replaceAll("O", "f").replaceAll("X", "s");
+
                 index = filedata[new_state];
                 state = add_input_to_the_board(state, index, symbol);
                 display_board(state);
+                
             }        
 
                 if(check_terminal_state(state, symbol))
@@ -201,27 +210,37 @@ function new_game_mod(filedata){
 
 }
 
+
+
 function select_random_json_file(){
 
+    var files = ["min_first1.json", 
+                "min_first3.json",
+                "min_first5.json", 
+                "min_first7.json",
+                "min_first9.json"];
+    
+    var filesIndex = -1;
+    var filename = '';
 
-    var files = ["min_first_pos1_imp1.json", 
-                "min_first_pos3_imp1.json",
-                "min_first_pos5_imp1.json", 
-                "min_first_pos7_imp1.json",
-                "min_first_pos9_imp1.json"];
-
-    var filesIndex = Math.floor((Math.random()*files.length));
-
-
-    var filename = files[filesIndex];
+    if(is_first_player_game)
+    {
+        filesIndex = Math.floor((Math.random()*files.length));
+        filename = files[filesIndex];
+    }
+    else{
+        filename = "min_second.json";
+    }
     
     fetch("/getjsonfile/"+filename+"/")
     .then(function (response){
         return response.json();
     })
     .then(function(data){
+
         $("#game-result p").text('');
-        new_game_mod(data);
+        play_game(data, is_first_player_game);
+        is_first_player_game = !is_first_player_game;
     });
     
 }
@@ -231,4 +250,4 @@ $("#new-game").click(function(){
     $(".cell").empty();
     $(".cell").off("click");
     select_random_json_file();
-})
+});

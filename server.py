@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello():
-    return render_template("html/game.html")
+    return render_template("html/index.html")
 
 
 @app.route('/getjsonfile/<string:filename>/')
@@ -22,4 +22,4 @@ def send_json_file(filename):
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0')
+    app.run(port=5500, debug=True)
